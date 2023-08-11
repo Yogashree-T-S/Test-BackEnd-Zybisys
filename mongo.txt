@@ -1,13 +1,13 @@
-____________1_________________________
+____________4=>a_________________________
 db.Reviews.find({"property_type":"House"})
 
-____________2_________________________
+____________4=>b_________________________
 
 db.Reviews.find({"price":{$gt:500}},{"_id":0,"listing_url":1, "name":1, "host.host_name":1, "host.host_location":1, "reviews.reviewer_name":1, "price":1})
-____________3_________________________
+____________4=>c_________________________
 
 db.Reviews.find({$and:[{'address.country':"Brazil"},{"review_scores.review_scores_rating":{$gte:9}}]})
 
-____________4_________________________
+____________4=>d_________________________
 
 db.Reviews.find({price:{$gt:600,$lt:900}})
