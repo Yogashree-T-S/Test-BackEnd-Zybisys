@@ -8,14 +8,18 @@ const {Add,Subtract, Product, Division}=require('./demo')
 validation.use(bodyparser.json());
 validation.use(bodyparser.urlencoded({extended: true}));
 validation.post('/validate', function(req, res){
-    let email=req.body.email;
-    let password=req.body.password;
+    // let email=req.body.email;
+    // let password=req.body.password;
 
-    if(email && password) {
-        if(email.includes('@') && password.length >4)
-            res.status(200).send("Success!");
+    // if(email && password) {
+    for(let val of req.body) {
+    
+        if(!(val.email.includes('@') && val.password.length >4))
+            res.status(400).send("Invalid Data");
     }
-    res.status(400).send("Invalid Data");
+    res.status(200).send("Success")  
+    // }
+    // res.status(400).send("Invalid Data");
 
 })
 
