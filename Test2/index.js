@@ -13,23 +13,43 @@ app.get('/uservisit',(req,res)=>{
 })
 
 // ____________________Answer2___________________________
-const check=(req,res,next)=>{
+const checks=(req,res,next)=>{
+    
     // let arr={name:'pavi'}
     // res.cookie("user",arr)
-    const name = req.params.name;
+    // const name = req.params.name;
+    // res.write(name)
+    // res.end(req.name)
+    // if(name===req.name){
+    //     res.send(name)
+    // }
 
-    const val=req.cookies.user.name!== undefined?true:false;
-    console.log(name,val,req.cookies.user[name])
-    if(val===true){
-        next();
+    const val=req.cookies.user.name
+    // res.send(val+req.name)
+    // // console.log(name,val,req.cookies.user[name])
+    if(val===req.name){
+        console.log("name",req.name)
+        res.send(req.name)
+        res.end();
+        // next();
     }
     else{
         throw new Error("user not authenticated")
     }
 }
-app.get('/authenticate/:name',check,(req,res)=>{
-    res.send("welcome")
+// app.use('/authenticate/:name',check)
+app.get('/authenticate/:name',(req,res,next)=>{
+    let name=req.params.name
+    req.name=name
+    next();
 })
+
+app.get('/authenticate/:name',(req,res,next)=>{
+    console.log("route",req.name)
+    next();
+})
+
+app.use('/authenticate/:name',checks)
 
 // ____________________Answer3___________________________
 const fs=require('fs');
@@ -77,9 +97,7 @@ app.get('/database/:objId', (req, res) => {
             app.set('view engine', 'ejs');
             app.set('views',__dirname)
             const coll=NewDb.collection("myNewCollection")
-            // res.send(typeof(req.params.objId))
             coll.find({_id: new objId(req.params.objId)}).toArray().then((value)=>{
-                // res.send(value[0]);
                 res.render('view',{value:value})
             })
         }
