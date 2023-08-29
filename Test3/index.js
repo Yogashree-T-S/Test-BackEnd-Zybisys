@@ -19,6 +19,7 @@ db.once('open', () => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(
   session({
     secret: 'your-secret-key',
@@ -26,6 +27,10 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+// 2. Create REST API to authenticate users using passportjs.
+//  Use mongoose ODM. You need to follow MVC Architecture. 
+// Create routes for registering a user, login, and logout a user
 app.use(passport.initialize());
 app.use(passport.session());
 
